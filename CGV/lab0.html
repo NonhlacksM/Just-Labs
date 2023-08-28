@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Project</title>
+</head>
+
+    <script>
+            let canvas;
+            let graphics;
+
+            function line(x1, y1, x2, y2){
+                graphics.beginPath();
+                graphics.moveTo(x1, y1);
+                graphics.lineTo(x2, y2);
+                graphics.stroke();
+            }
+            
+            function init() {
+                canvas = document.getElementById("myCanvas");
+                graphics = canvas.getContext("2d");
+
+                setInterval(draw, 10);
+            }
+
+            function DrawCircle(radius, c_x,c_y) {
+            let n = 1000;
+            let Theta = 0;
+            let x = radius*Math.cos(Theta)+c_x;
+            let y = radius*Math.sin(Theta)+c_y;
+            let d = 2*Math.PI/n;
+
+            graphics.beginPath();
+            graphics.moveTo(x,y);
+
+            for (Theta = 0; Theta<=2*Math.PI; Theta += d) {
+                x = radius*Math.cos(Theta)+c_x;
+                y = radius*Math.sin(Theta)+c_y;
+                
+                graphics.lineTo(x,y);
+            }
+
+            graphics.stroke();
+        }
+
+        function DrawSmallTic(radius, c_x,c_y) {
+            let n = 60;
+            let Theta = 0;
+            let x = radius*Math.cos(Theta)+c_x;
+            let y = radius*Math.sin(Theta)+c_y;
+            let x_2;
+            let y_2;
+            let d = 2*Math.PI/n;
+
+            for (Theta = 0; Theta<=2*Math.PI; Theta += d) {
+                x = radius*Math.cos(Theta)+c_x;
+                y = radius*Math.sin(Theta)+c_y;
+
+                x_2 = 0.97*radius*Math.cos(Theta)+c_x;
+                y_2 = 0.97*radius*Math.sin(Theta)+c_y;
+                
+                line(x,y,x_2,y_2);
+            }
+        }
+
+        function DrawLargeTic(radius, c_x,c_y) {
+            let n = 12;
+            let Theta = 0;
+            let x = radius*Math.cos(Theta)+c_x;
+            let y = radius*Math.sin(Theta)+c_y;
+            let x_2;
+            let y_2;
+            let d = 2*Math.PI/n;
+
+            for (Theta = 0; Theta<=2*Math.PI; Theta += d) {
+                x = 0.95*radius*Math.cos(Theta)+c_x;
+                y = 0.95*radius*Math.sin(Theta)+c_y;
+
+                x_2 = 0.85*radius*Math.cos(Theta)+c_x;
+                y_2 = 0.85*radius*Math.sin(Theta)+c_y;
+                
+                line(x,y,x_2,y_2);
+            }
+        }
+
+        function draw() {
+            graphics.clearRect(0,0,canvas.width,canvas.height);
+            DrawCircle(240,300,300);
+            DrawSmallTic(240,300,300);
+            DrawLargeTic(240,300,300);
+            convert(240,300,300);
+        }
+
+        function convert(radius,c_x, c_y) {
+            let d = new Date();
+            document.getElementById("someid").innerHTML = d;
+
+            let seconds = d.getSeconds() + (d.getMilliseconds()/1000);
+            let minutes = d.getMinutes() + (seconds/60);
+            let hours = d.getHours() + (minutes/60);
+
+            theta_s = (seconds/30*Math.PI) - Math.PI/2;
+            theta_m = (minutes/30*Math.PI) - Math.PI/2;
+            theta_h = (hours/6*Math.PI) - Math.PI/2;
+
+            let hour_hand_x = 0.5*radius*Math.cos(theta_h)+c_x;
+            let hour_hand_y = 0.5*radius*Math.sin(theta_h)+c_y;
+
+            let minute_hand_x = 0.8*radius*Math.cos(theta_m)+c_x;
+            let minute_hand_y = 0.8*radius*Math.sin(theta_m)+c_y;
+
+            let second_hand_x = radius*Math.cos(theta_s)+c_x;
+            let second_hand_y = radius*Math.sin(theta_s)+c_y;
+
+            line(c_x, c_y, hour_hand_x, hour_hand_y);
+            line(c_x,c_y,minute_hand_x, minute_hand_y);
+            graphics.strokeStyle = "red";  
+            line(c_x,c_y,second_hand_x,second_hand_y);
+            graphics.strokeStyle = "black";
+        }
+
+    </script>
+
+    
+<body onload="init()">
+    <h1> My heading</h1>
+    <p id="someid"> This is a very basic webpage. </p>
+    <canvas id="myCanvas" height="600" width="600" style="border:1px solid #d3d3d3">
+         Your browser does not support the HTML5 canvas tag.
+    </canvas>
+</body>
+</html>
