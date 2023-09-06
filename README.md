@@ -5,3 +5,7 @@ The following labs introduce the use of HTML Canvas for 2D graphics in web devel
 
 The provided example showcases an HTML page with tags structured hierarchically, including a canvas element. The canvas element is defined with attributes like id, width, height, and style. JavaScript is used to draw on this canvas. While these labs don't delve into web development specifics, they focus on leveraging JavaScript to create dynamic and interactive graphics on the HTML Canvas.
 
+-Lab 0 is a real-time clock.
+-Lab 2.1 is just basic shapes
+- Lab 2.2 is the mouse interaction. As it stands, the program draws a sequence of squares as the user drags the mouse on the canvas.
+- Lab 3.1, 3.2, and 3.3 are animated scenes.
